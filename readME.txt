@@ -12,10 +12,10 @@ Description of data files:
 
 1. harvest_rate_GSG.csv: File saved to csv2 format (sep=';'). Harvest rates of adult greater snow geese between 1990 and 2019.
 
-Column description: 
+   Column description: 
 
- - Year: year;
- - HR: harvest rate (adults only), see details in main text for calculation of harvest rate.
+   - Year: year;
+   - HR: harvest rate (adults only), see details in main text for calculation of harvest rate.
 
 
 2. Model output files I (M6_this_study.csv, M10_this_study.csv, M14_LeTourneux_et_al_2022.csv, M17_LeTourneux_et_al_2022.csv)
