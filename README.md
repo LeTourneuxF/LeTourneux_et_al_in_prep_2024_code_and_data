@@ -6,8 +6,16 @@ All capture-mark-recapture analyses were conducted in the software E-SURGE and a
 The code for our most parsimonious E-surge model is provided in the file "E-Surge_code_model_M10.docx". Some basic knowledge of E-Surge is needed to fit the model, however, a detailed explanation is given on how to set the initial values as this step is not intuitive.
 
 
-\bold{Description of data files}:
+Description of data files:
 
 harvest_rate_GSG.csv: File saved to csv2 format (sep=';'). 
-Harvest rates of adult greater snow geese between 1990 and 2019. Columns: Year, year; HR, harvest rate (adults only), see details in main text.
+Harvest rates of adult greater snow geese between 1990 and 2019. 
+Column description: 
+ - Year: year;
+ - HR: harvest rate (adults only), see details in main text for calculation of harvest rate.
 
+Model output files I (M6_this_study.csv, M10_this_study.csv, M14_LeTourneux_et_al_2022.csv, M17_LeTourneux_et_al_2022.csv)
+Column description: 
+ - Parameters: Refers to the different matrices and steps. IS: Initial states, C: 1st transition matrix (collar loss), S: 2nd transition matrix (survival); E: 1st event matrix, E2: 2nd event matrix.
+ - From: State of origin (i.e., matrix lines).  
+; From; To; Time; Age; Group; Step): Contain identification of model parameters. Parameters identifies the matrices 
