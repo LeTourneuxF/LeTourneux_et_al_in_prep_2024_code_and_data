@@ -15,10 +15,19 @@ Column description:
  - Year: year;
  - HR: harvest rate (adults only), see details in main text for calculation of harvest rate.
 
-\n
+
 2. Model output files I (M6_this_study.csv, M10_this_study.csv, M14_LeTourneux_et_al_2022.csv, M17_LeTourneux_et_al_2022.csv)
 
 Column description: 
  - Parameters: Refers to the different matrices and steps. IS: Initial states, C: 1st transition matrix (collar loss), S: 2nd transition matrix (survival); E: 1st event matrix, E2: 2nd event matrix.
- - From: State of origin (i.e., matrix lines).  
-; From; To; Time; Age; Group; Step): Contain identification of model parameters. Parameters identifies the matrices 
+ - From: State of origin (i.e., matrix lines). Varies based on model and matrix. See Appendix 1 in this study and LeTourneux et al. 2022 for details.
+ - To: State of arrival (i.e., matrix columns)
+ - Time: Occasion
+ - Age: Age class, used to model change in collar loss probabilities through time (See LeTourneux et al. 2022 for details)
+ - Group: Grouping factor for the data. Not used in this study
+ - Step: Matrix step (information already included in 'Parameters')
+ - Estimates: Parameter estimates on the [0-1] scale
+ - CI-: Lower 95% confidence interval of parameter
+ - CI+: Upper 95% confidence interval of parameter
+ - SE: Standard error of parameter
+
