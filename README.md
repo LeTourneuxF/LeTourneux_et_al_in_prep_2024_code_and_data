@@ -15,7 +15,7 @@ Column description:
  - Year: year;
  - HR: harvest rate (adults only), see details in main text for calculation of harvest rate.
 
-
+\n
 2. Model output files I (M6_this_study.csv, M10_this_study.csv, M14_LeTourneux_et_al_2022.csv, M17_LeTourneux_et_al_2022.csv)
 
 Column description: 
