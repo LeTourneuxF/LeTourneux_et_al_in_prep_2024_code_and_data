@@ -5,3 +5,5 @@ All capture-mark-recapture analyses were conducted in the software E-SURGE and a
 
 The code for our most parsimonious E-surge model is provided in the file "E-Surge_code_model_M10.docx". Some basic knowledge of E-Surge is needed to fit the model, however, a detailed explanation is given on how to set the initial values as this step is not intuitive.
 
+Description of data files:
+annual harvest rates
