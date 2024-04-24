@@ -5,7 +5,7 @@ library(cowplot)
 library(scales)
 
 
-setwd("~/Doc/MSs/MS_seasonal_survival/soumission_Ecology/script_and_data")
+setwd("~/script_and_data")
 
 #useful function for 'not in'
 '%!in%' <- function(x,y)!('%in%'(x,y))
@@ -201,11 +201,11 @@ S.s.p<-S.s.p%>%
    geom_vline(xintercept = c(1998.5, 2008.5), lty=1)+
    #scale_color_manual(values=c("#4E79A7"))+
    scale_x_continuous(name='', breaks=seq(1991,2018,3))+
-   scale_y_continuous(name='Survival probability', limits=c(0,1))+
+   scale_y_continuous(name='Seasonal survival probability', limits=c(0,1))+
    coord_cartesian(ylim=c(0.6,1))+
    theme_classic()+
    theme(axis.text=element_text(size=12, colour="black"),
-         axis.title=element_text(size=13, colour="black", face="bold"),
+         axis.title=element_text(size=15, colour="black", face="bold"),
          legend.text=element_text(size=12, colour="black"),
          legend.title=element_text(size=13, colour="black"),
          legend.position = c(0.5,1.07),
@@ -306,11 +306,11 @@ S.s.p<-S.s.p%>%
    
    #scale_color_manual(values=c("#4E79A7"))+
    scale_x_continuous(name='', breaks=seq(1991,2018,3))+
-   scale_y_continuous(name='Survival probability', limits=c(0,1))+
+   scale_y_continuous(name='Seasonal survival probability', limits=c(0,1))+
    coord_cartesian(ylim=c(0.6,1))+
    theme_classic()+
    theme(axis.text=element_text(size=12, colour="black"),
-         axis.title=element_text(size=13, colour="black", face="bold"),
+         axis.title=element_text(size=15, colour="black", face="bold"),
          legend.text=element_text(size=12, colour="black"),
          legend.title=element_text(size=13, colour="black"),
          legend.position = c(0.5,1.07),
@@ -412,11 +412,11 @@ S.s.p<-S.s.p%>%
    
    #scale_color_manual(values=c("#4E79A7"))+
    scale_x_continuous(name='', breaks=seq(1991,2017,3))+
-   scale_y_continuous(name='Survival probability', limits=c(0,1))+
+   scale_y_continuous(name='Seasonal survival probability', limits=c(0,1))+
    coord_cartesian(ylim=c(0.6,1))+
    theme_classic()+
    theme(axis.text=element_text(size=12, colour="black"),
-         axis.title=element_text(size=13, colour="black", face="bold"),
+         axis.title=element_text(size=15, colour="black", face="bold"),
          legend.text=element_text(size=12, colour="black"),
          legend.title=element_text(size=13, colour="black"),
          legend.position = c(0.5,1.07),
@@ -517,11 +517,11 @@ S.s.p<-S.s.p%>%
    
    #scale_color_manual(values=c("#4E79A7"))+
    scale_x_continuous(name='', breaks=seq(1991,2018,3))+
-   scale_y_continuous(name='Survival probability', limits=c(0,1))+
+   scale_y_continuous(name='Seasonal survival probability', limits=c(0,1))+
    coord_cartesian(ylim=c(0.6,1))+
    theme_classic()+
    theme(axis.text=element_text(size=12, colour="black"),
-         axis.title=element_text(size=13, colour="black", face="bold"),
+         axis.title=element_text(size=15, colour="black", face="bold"),
          legend.text=element_text(size=12, colour="black"),
          legend.title=element_text(size=13, colour="black"),
          legend.position = c(0.5,1.07),
@@ -534,6 +534,7 @@ S.s.p<-S.s.p%>%
 ###Final figure
 (Figure2<-plot_grid(survie_ete, survie_automne, survie_hiver, survie_printemps, nrow = 2))
 
+ggsave(plot=Figure2, filename='Fig2.pdf', height=12, width=12)
 
 
 
@@ -680,7 +681,7 @@ preds_long_WS<-preds_long_WS%>%arrange(name)%>%
   mutate(xval=rep(xrange_WS, times=(nrow(preds_long_WS)/length(xrange_WS))))%>%print(n=100)
 
 #Plot figure
-(final_WS<-ggplot(data=S.s.mort%>%filter(year>1998,year<2019),
+(Fig3<-ggplot(data=S.s.mort%>%filter(year>1998,year<2019),
                   aes(y=mortality_spring,
                       x=mortality_winter))+
     #Mean relationship from simulated relationships
@@ -689,12 +690,16 @@ preds_long_WS<-preds_long_WS%>%arrange(name)%>%
     #Min and max predicted values from the central 95% of simulated relationship slopes
     geom_ribbon(data=preds.mean_WS, aes(x=xval, y=preds.mean_WS, ymax=UCI,ymin=LCI), alpha=0.2)+
     
-    #Individual mortality estimates for winter and spring
-    geom_point()+
     
     #Error associated to each estimate (on X and Y)
     geom_errorbar(aes(ymax=LCI_m_spring,ymin=UCI_m_spring), width=0.002,alpha=0.3)+
     geom_errorbar(aes(xmin=UCI_m_winter,xmax=LCI_m_winter), width=0.002,alpha=0.3)+
+    
+    #Individual mortality estimates for winter and spring
+    geom_point(size=2.5)+
+    geom_point(data=S.s.mort%>%filter(year>2007,year<2019),
+               aes(y=mortality_spring,
+                   x=mortality_winter), col='white', size=1.25)+
     
     #Some more plotting parameters
     coord_cartesian(ylim=c(0,0.13),xlim=c(0,0.1))+
@@ -702,10 +707,18 @@ preds_long_WS<-preds_long_WS%>%arrange(name)%>%
     scale_x_continuous(name="Winter mortality")+
     theme_classic()+
     
-    ggtitle(label='Correlation spring-winter mortalities 1999-2019')+
+    #ggtitle(label='Correlation spring-winter mortalities 1999-2019')+
     
     #geom_smooth(method='lm',se = F, lty=2)+
-    theme(legend.position='none'))
+    theme_classic()+
+    theme(legend.position="none",
+          axis.text=element_text(size=15, colour="black"),
+          axis.title=element_text(size=16, colour="black", face="bold"),
+          text = element_text(size=12, colour="black"),
+          legend.text=element_text(size=10, colour="black"),
+          legend.title=element_text(size=13, colour="black")))
+
+ggsave(plot=Fig3, file='fig3.pdf', height=8, width=8)
 
 
 # Figure 4 main text ####
@@ -859,7 +872,7 @@ mean.p.sim<-data.frame(Period=c(1,2,3),Estimates=rowMeans(sim.p.annual),LCI=LCI.
     #Lines for period means
     #Period 1
     geom_segment(
-      aes(x = 1990,    y = as.numeric(mean.p.sim%>%filter(Period==1)%>% dplyr::select(Estimates)),
+      aes(x = 1989.75,    y = as.numeric(mean.p.sim%>%filter(Period==1)%>% dplyr::select(Estimates)),
           xend = 1997, yend = as.numeric(mean.p.sim%>%filter(Period==1)%>%dplyr::select(Estimates))),
       color='#F28E2B', lty=2)+
     
@@ -884,7 +897,7 @@ mean.p.sim<-data.frame(Period=c(1,2,3),Estimates=rowMeans(sim.p.annual),LCI=LCI.
     ##Period 3
     geom_segment(
       aes(x = 2008,    y = as.numeric(mean.p.sim%>%filter(Period==3)%>%dplyr::select(Estimates)),
-          xend = 2017.5, yend = as.numeric(mean.p.sim%>%filter(Period==3)%>%dplyr::select(Estimates))),
+          xend = 2017.25, yend = as.numeric(mean.p.sim%>%filter(Period==3)%>%dplyr::select(Estimates))),
       color='#F28E2B', lty=2)+
     
     
@@ -934,22 +947,26 @@ mean.p.sim<-data.frame(Period=c(1,2,3),Estimates=rowMeans(sim.p.annual),LCI=LCI.
     geom_errorbar(aes(x=Time, ymin=LCI, ymax=UCI), width=0.3,col='#4E79A7')+
     geom_point(size=1.75, col='#4E79A7')+
     
-    annotate(geom = 'text', x=1993, y=0.35, label = 'Historical hunting\nregulations')+
-    annotate(geom = 'text', x=2002.5, y=0.35, label = 'Special hunting\nregulations in\nCanada only' )+
-    annotate(geom = 'text', x=2012.25, y=0.35, label = 'Special hunting\nregulations in\nCanada and the USA' )+
+    annotate(geom = 'text', x=1993, y=0.33, label = 'Historical hunting\nregulations', size=5.5)+
+    annotate(geom = 'text', x=2002.5, y=0.33, label = 'Special hunting\nregulations in\nCanada only', size=5.5 )+
+    annotate(geom = 'text', x=2013, y=0.33, label = 'Special hunting\nregulations in\nCanada and the USA', size=5.5 )+
     
     geom_vline(xintercept = 1997.5, lty=1)+
     geom_vline(xintercept = 2007.5, lty=1)+
     #scale_color_manual(values=c("#F28E2B"))+
     scale_x_continuous(name='', breaks=seq(1990,2017,3))+
-    scale_y_continuous(name='Survival probability', limits=c(0,1))+
+    scale_y_continuous(name='Annual survival probability', limits=c(0,1))+
     coord_cartesian(ylim=c(0.25,1))+
     theme_classic()+
-    theme(axis.text=element_text(size=12, colour="black"),
-          axis.title=element_text(size=13, colour="black", face="bold"),
+    theme(axis.text=element_text(size=15, colour="black"),
+          axis.title=element_text(size=16, colour="black", face="bold"),
           text = element_text(size=12, colour="black"),
           legend.text=element_text(size=10, colour="black"),
           legend.title=element_text(size=13, colour="black")))
+
+
+ggsave(plot=Fig4, filename = 'Fig4.pdf',height = 7, width=7)
+
 
 
 
